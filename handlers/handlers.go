@@ -2,6 +2,9 @@ package handlers
 
 import (
 	"fmt"
+	"bufio"
+	"os"
+	"strings"
 	"noteapp/entities"
 	"noteapp/services"
 )
@@ -34,12 +37,15 @@ func Start() {
 }
 
 func addNote(notes *[]entities.Note) {
-	var title, content string
+	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Enter note title: ")
-	fmt.Scanln(&title)
+	title, _ := reader.ReadString('\n')
+	title = strings.TrimSpace(title)
+
 	fmt.Print("Enter note content: ")
-	fmt.Scanln(&content)
+	content, _ := reader.ReadString('\n')
+	content = strings.TrimSpace(content)
 
 	newNote := entities.Note{
 		Title: title,
